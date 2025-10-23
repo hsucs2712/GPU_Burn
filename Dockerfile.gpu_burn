@@ -1,0 +1,25 @@
+# =====================
+# GPU Burn Environment
+# =====================
+
+FROM nvidia/cuda:12.6.0-devel-ubuntu22.04
+
+LABEL maintainer="HSU CHIEN SHAN <0894gg88@gmail.com>"
+ENV DEBIAN_FROENTEND=noninteractive
+
+#-----install Dependencies--------
+RUN apt-get update && apt-get install -y \
+ build-essential \
+ git && \
+ rm -rf /var/lib/apt/lists/*
+
+#-----install GPU Burn---------
+RUN git clone https://github.com/wilicc/gpu-burn.git /opt/gpu-burn && \
+ cd /opt/gpu-burn && \
+ make
+
+#----------Working Directory-----------
+WORKDIR /workspace
+
+#--------------Defaule Command------
+CMD ["/bin/bash"]
